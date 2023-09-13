@@ -68,12 +68,12 @@ RSpec.describe "Subscriptions", type: :request do
       customer = create(:customer)
   
       headers = { "CONTENT_TYPE" => "application/json" }
-      sub_params = {
-        "title" => "Tea Subscription",
-        "price" => "", # empty string
-        "frequency" => "Every other week",
-        "customer_id" => "#{customer.id}"
-      }
+      sub_params = ({
+                    "title" => "Tea Subscription",
+                    "price" => "", # empty string
+                    "frequency" => "Every other week",
+                    "customer_id" => "#{customer.id}"
+                  })
 
       post "/api/v1/customers/#{customer.id}/subscriptions", headers: headers, params: JSON.generate(subscription: sub_params)
 
@@ -83,7 +83,7 @@ RSpec.describe "Subscriptions", type: :request do
       error = JSON.parse(response.body, symbolize_names: true)
 
       message = error[:errors][0][:detail]
-      
+
       expect(message).to eq("Validation failed: Price can't be blank")
     end
   end
