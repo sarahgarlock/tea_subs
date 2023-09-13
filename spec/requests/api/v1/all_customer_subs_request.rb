@@ -9,8 +9,9 @@ RSpec.describe 'All Customer Subscriptions', type: :request do
       subscription3 = create(:subscription, status: 2, customer: customer) # cancelled
 
       get "/api/v1/customers/#{customer.id}/subscriptions"
-
+      
       expect(response).to be_successful
+      expect(response.status).to eq(200)
 
       subscriptions = JSON.parse(response.body, symbolize_names: true)
 
