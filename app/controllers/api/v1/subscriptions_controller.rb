@@ -1,4 +1,6 @@
 class Api::V1::SubscriptionsController < ApplicationController
+  rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   before_action :find_customer
 
   def index
@@ -7,7 +9,7 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def create
-    sub = Subscription.new(subscription_params)
+    sub = Subscription.create(subscription_params)
     sub.status = :active
     sub.save!
     render json: SubscriptionSerializer.new(sub), status: 201
@@ -27,5 +29,13 @@ class Api::V1::SubscriptionsController < ApplicationController
 
   def find_customer
     @_customer ||= Customer.find(params[:customer_id])
+  end
+
+  def record_invalid(error)
+    render json: ErrorSerializer.error_message(error), status: 400
+  end
+
+  def record_not_found(error)
+    render json: ErrorSerializer.error_message(error), status: 404
   end
 end
