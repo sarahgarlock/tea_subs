@@ -8,7 +8,7 @@ RSpec.describe "Subscriptions", type: :request do
       expect(Subscription.count).to eq(0)
 
       headers = {"CONTENT_TYPE" => "application/json"}
-      sub_params = ({"title" => "Tea Subscription",
+      sub_params = ({ "title" => "Tea Subscription",
                       "price" => "8.99",
                       "frequency" => "Every other week",
                       "customer_id" => "#{customer.id}"
