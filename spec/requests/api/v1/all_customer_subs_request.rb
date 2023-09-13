@@ -4,9 +4,9 @@ RSpec.describe 'All Customer Subscriptions', type: :request do
   describe 'happy path' do
     it 'can return all customer subscriptions' do
       customer = create(:customer)
-      subscription1 = create(:subscription, status: 1, customer: customer)
-      subscription2 = create(:subscription, status: 1, customer: customer)
-      subscription3 = create(:subscription, status: 2, customer: customer)
+      subscription1 = create(:subscription, status: 1, customer: customer) # active
+      subscription2 = create(:subscription, status: 1, customer: customer) # active
+      subscription3 = create(:subscription, status: 2, customer: customer) # cancelled
 
       get "/api/v1/customers/#{customer.id}/subscriptions"
 
