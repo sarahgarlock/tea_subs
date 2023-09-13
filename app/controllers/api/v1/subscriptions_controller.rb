@@ -8,6 +8,12 @@ class Api::V1::SubscriptionsController < ApplicationController
     render json: SubscriptionSerializer.new(sub), status: 201
   end
 
+  def destroy
+    sub = Subscription.find(params[:id])
+    sub.status = :cancelled
+    sub.destroy!
+  end
+
   private
 
   def subscription_params
