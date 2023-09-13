@@ -46,7 +46,7 @@ group :development, :test do
   gem 'capybara'
   gem 'simplecov'
   gem 'shoulda-matchers'
-  gem 'jsonapi-serializers'
+  gem 'jsonapi-serializer'
   gem 'faker'
   gem 'factory_bot_rails'
 end
