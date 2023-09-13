@@ -1,24 +1,101 @@
-# README
+# Tea Subscription Service - Endpoints
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+`Ruby 3.2.2`<br>
+`Rails 7.0.8`
 
-Things you may want to cover:
+## Create a new Tea Subscription
+```js
+  POST /api/v1/customers/:customer_id/subscriptions
+```
 
-* Ruby version
+### Validated Parameters
+<br>
 
-* System dependencies
+```| title | price | frequenty | status | customer_id |```
+<br>
+<br>
 
-* Configuration
+### Example Request
+```json
+  {
+    "title": "Green Tea",
+    "price": 13.99,
+    "frequency": "monthly",
+    "status": "active",
+    "customer_id": 1
+  }
 
-* Database creation
+  Status: 201 Created
+```
+<br>
+<hr>
+<br>
 
-* Database initialization
+## Get all Customer Tea Subscriptions
+```js
+  GET /api/v1/customers/:customer_id/subscriptions
+```
 
-* How to run the test suite
+### Example Request
+```json
+{
+    "data": [
+        {
+            "id": "1",
+            "type": "subscription",
+            "attributes": {
+                "customer_id": 1,
+                "title": "Earl Grey",
+                "price": "10.00",
+                "status": "active",
+                "frequency": "monthly"
+            }
+        },
+        {
+            "id": "2",
+            "type": "subscription",
+            "attributes": {
+                "customer_id": 1,
+                "title": "Green Tea",
+                "price": "10.00",
+                "status": "cancelled",
+                "frequency": "monthly"
+            }
+        },
+        {
+            "id": "10",
+            "type": "subscription",
+            "attributes": {
+                "customer_id": 1,
+                "title": "Tea Subscription",
+                "price": "8.99",
+                "status": "active",
+                "frequency": "Every other week"
+            }
+        },
+        {
+            "id": "11",
+            "type": "subscription",
+            "attributes": {
+                "customer_id": 1,
+                "title": "Tea Subscription",
+                "price": "8.99",
+                "status": "active",
+                "frequency": "Every other week"
+            }
+        }
+    ]
+}
+  Status: 200 OK
+```
+<br>
+<hr>
+<br>
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Cancel Subscription
+```js
+  DELETE /api/v1/customers/:customer_id/subscriptions/:sub_id
+  ```
+```json
+  Status: 204 No Content
+```
