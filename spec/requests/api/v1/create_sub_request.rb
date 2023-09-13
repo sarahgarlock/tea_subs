@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-require 'rails_helper'
-
 RSpec.describe "Subscriptions", type: :request do
   describe "new subscription" do
     it "creates a new subscription for a customer" do
@@ -35,7 +33,7 @@ RSpec.describe "Subscriptions", type: :request do
       data = JSON.parse(response.body, symbolize_names: true)
 
       created_sub = data[:data]
-      
+
       expect(created_sub).to be_a(Hash)
       expect(created_sub).to have_key(:id)
       expect(created_sub[:id]).to eq(new_sub.id.to_s)
