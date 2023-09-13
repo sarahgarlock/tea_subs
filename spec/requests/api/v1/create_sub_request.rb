@@ -1,14 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe "Subscriptions", type: :request do
-  describe "new subscription" do
+  describe "new subscription - happy path" do
     it "creates a new subscription for a customer" do
       customer = create(:customer)
 
       expect(Subscription.count).to eq(0)
 
       headers = {"CONTENT_TYPE" => "application/json"}
-      sub_params = ({ "title" => "Tea Subscription",
+      sub_params = ({ 
+                      "title" => "Tea Subscription",
                       "price" => "8.99",
                       "frequency" => "Every other week",
                       "customer_id" => "#{customer.id}"
@@ -59,6 +60,31 @@ RSpec.describe "Subscriptions", type: :request do
 
       expect(attributes[:frequency]).to eq(new_sub.frequency)
       expect(attributes[:frequency]).to eq("Every other week")
+    end
+  end
+
+  describe "new subscription - sad path" do
+    it 'returns an error if validated info not filled in' do
+      customer = create(:customer)
+  
+      headers = { "CONTENT_TYPE" => "application/json" }
+      sub_params = {
+        "title" => "Tea Subscription",
+        "price" => "", # empty string
+        "frequency" => "Every other week",
+        "customer_id" => "#{customer.id}"
+      }
+
+      post "/api/v1/customers/#{customer.id}/subscriptions", headers: headers, params: JSON.generate(subscription: sub_params)
+
+      expect(Subscription.count).to eq(0)
+      expect(response).to have_http_status(:bad_request)
+
+      error = JSON.parse(response.body, symbolize_names: true)
+
+      message = error[:errors][0][:detail]
+      
+      expect(message).to eq("Validation failed: Price can't be blank")
     end
   end
 end
