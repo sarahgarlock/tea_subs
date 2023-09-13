@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :customers do
-        resources :subscriptions, only: [:create, :destroy]
+      resources :customers, only: %i[show] do
+        resources :subscriptions, only: %i[create destroy index]
       end
     end
   end
