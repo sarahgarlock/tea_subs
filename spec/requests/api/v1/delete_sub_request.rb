@@ -9,8 +9,9 @@ RSpec.describe 'Cancel a subscription' do
 
     delete "/api/v1/customers/#{customer.id}/subscriptions/#{subscription.id}"
 
-    expect(response.status).to eq(204)
+    expect(response.status).to eq(200)
     expect(Subscription.count).to eq(0)
+    expect(response.body).to include("Subscription successfully cancelled")
     expect{ Subscription.find(subscription.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 end

@@ -27,6 +27,23 @@
 
   Status: 201 Created
 ```
+
+### Response
+```json
+{
+    "data": {
+        "id": "13",
+        "type": "subscription",
+        "attributes": {
+            "customer_id": 1,
+            "title": "Tea Subscription",
+            "price": "8.99",
+            "status": "active",
+            "frequency": "Every other week"
+        }
+    }
+}
+```
 <br>
 <hr>
 <br>
