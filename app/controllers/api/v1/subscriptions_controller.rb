@@ -8,15 +8,15 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def create
-    sub = find_customer.subscriptions.find_or_create_by(subscription_params)
-    sub.update!(status: :active)
+    sub = Subscription.create(subscription_params)
+    sub.status = :active
+    sub.save!
     render json: SubscriptionSerializer.new(sub), status: 201
   end
 
-  def destroy
+  def update
     sub = Subscription.find(params[:id])
-    sub.status = :cancelled
-    sub.destroy!
+    sub.update!(status: :cancelled)
     render json: SuccessSerializer.success_message("Subscription successfully cancelled"), status: 200
   end
 

@@ -111,8 +111,12 @@
 
 ## Cancel Subscription
 ```js
-  DELETE /api/v1/customers/:customer_id/subscriptions/:sub_id
+  PATCH /api/v1/customers/:customer_id/subscriptions/:sub_id
   ```
 ```json
-  Status: 204 No Content
+
+{
+    "successs": "Subscription successfully cancelled"
+}
+  Status: 200 OK
 ```
